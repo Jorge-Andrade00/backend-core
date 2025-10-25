@@ -1,7 +1,7 @@
-# @jofas/backend-core
+# @jorge-andrade00/backend-core
 
-![npm version](https://img.shields.io/npm/v/@jofas/backend-core)
-![license](https://img.shields.io/npm/l/@jofas/backend-core)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/Jorge-Andrade00/backend-core)
+![license](https://img.shields.io/github/license/Jorge-Andrade00/backend-core)
 
 Core NestJS modules and utilities for backend applications.
 
@@ -12,7 +12,11 @@ This library provides reusable NestJS modules and services for backend applicati
 ## Installation
 
 ```bash
-npm install @jofas/backend-core
+# Configurar el registry de GitHub
+echo "@jorge-andrade00:registry=https://npm.pkg.github.com" >> .npmrc
+
+# Instalar el paquete
+npm install @jorge-andrade00/backend-core
 ```
 
 ## Modules
@@ -34,7 +38,7 @@ A configurable HTTP client module built on top of Axios for NestJS applications.
 
 ```typescript
 import { Module } from '@nestjs/common';
-import { HttpClientModule } from '@jofas/backend-core';
+import { HttpClientModule } from '@jorge-andrade00/backend-core';
 
 @Module({
   imports: [
@@ -52,7 +56,7 @@ export class AppModule {}
 ```typescript
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { HttpClientModule } from '@jofas/backend-core';
+import { HttpClientModule } from '@jorge-andrade00/backend-core';
 
 @Module({
   imports: [
@@ -74,7 +78,7 @@ export class AppModule {}
 
 ```typescript
 import { Injectable, Inject } from '@nestjs/common';
-import { HTTP_CLIENT, HttpClient } from '@jofas/backend-core';
+import { HTTP_CLIENT, HttpClient } from '@jorge-andrade00/backend-core';
 
 @Injectable()
 export class ExampleService {
