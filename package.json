@@ -1,6 +1,6 @@
 {
   "name": "@jorge-andrade00/backend-core",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Core NestJS modules and utilities for backend applications",
   "author": "jofas",
   "private": false,
