@@ -14,6 +14,9 @@ export * from './http-client/consts/http-client.constants';
 // Pagination Module
 export { PaginationModule } from './pagination/pagination.module';
 
+// Pagination Services
+export { PaginationService } from './pagination/services/pagination.service';
+
 // Pagination Interfaces
 export * from './pagination/interfaces/pagination-params.interface';
 export * from './pagination/interfaces/pagination-response.interface';
