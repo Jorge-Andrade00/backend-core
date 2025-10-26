@@ -94,9 +94,76 @@ export class ExampleService {
 }
 ```
 
+### PaginationModule
+
+A module that provides ORM-agnostic pagination utilities for NestJS applications.
+
+#### Features
+
+- ✅ ORM-agnostic pagination service
+- ✅ Skip calculation for database queries
+- ✅ Standardized pagination response format
+- ✅ TypeScript support with generics
+- ✅ Easy integration with any ORM (TypeORM, Prisma, Mongoose, etc.)
+
+#### Usage
+
+**Module Configuration:**
+
+```typescript
+import { Module } from '@nestjs/common';
+import { PaginationModule } from '@jorge-andrade00/backend-core';
+
+@Module({
+  imports: [PaginationModule],
+})
+export class AppModule {}
+```
+
+**Using the Pagination Service:**
+
+```typescript
+import { Injectable } from '@nestjs/common';
+import { PaginationService } from '@jorge-andrade00/backend-core';
+
+@Injectable()
+export class UsersService {
+  constructor(private paginationService: PaginationService) {}
+
+  async findAll(page: number = 1, limit: number = 10) {
+    // Calculate skip for your ORM query
+    const skip = this.paginationService.calculateSkip(page, limit);
+
+    // Example with any ORM
+    const [data, total] = await Promise.all([
+      this.repository.find({ skip, take: limit }),
+      this.repository.count(),
+    ]);
+
+    // Return paginated result
+    return this.paginationService.getPaginatedResult([data, total], {
+      page,
+      limit,
+    });
+  }
+}
+```
+
+**Pagination Response Format:**
+
+```typescript
+{
+  data: T[],          // Array of items
+  total: number,      // Total number of items
+  lastPage: number,   // Last page number
+  currentPage: number,// Current page
+  limit: number       // Items per page
+}
+```
+
 ## API Reference
 
-### Types
+### HttpClientModule Types
 
 ```typescript
 interface HttpClientConfig {
@@ -110,6 +177,31 @@ interface HttpClient {
   post<T>(url: string, data?: any, config?: RequestConfig): Promise<T>;
   put<T>(url: string, data?: any, config?: RequestConfig): Promise<T>;
   patch<T>(url: string, data?: any, config?: RequestConfig): Promise<T>;
+}
+```
+
+### PaginationModule Types
+
+```typescript
+interface PaginationParams {
+  page: number;
+  limit: number;
+}
+
+interface PaginationResponse<T> {
+  data: T[];
+  total: number;
+  lastPage: number;
+  currentPage: number;
+  limit: number;
+}
+
+class PaginationService {
+  calculateSkip(page: number, limit: number): number;
+  getPaginatedResult<T>(
+    [data, total]: [T[], number],
+    params: PaginationParams,
+  ): PaginationResponse<T>;
 }
 ```
 
