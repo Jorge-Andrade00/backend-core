@@ -1,4 +1,4 @@
-import { HttpClientResponse } from './http-client-response.interface';
+import { HttpServiceResponse } from './http-service-response.interface';
 
 export interface RequestConfig {
   headers?: Record<string, string>;
@@ -6,25 +6,25 @@ export interface RequestConfig {
   data?: any;
 }
 
-export interface HttpClient {
-  get<T>(url: string, config?: RequestConfig): Promise<HttpClientResponse<T>>;
+export interface HttpService {
+  get<T>(url: string, config?: RequestConfig): Promise<HttpServiceResponse<T>>;
   delete<T>(
     url: string,
     config?: RequestConfig,
-  ): Promise<HttpClientResponse<T>>;
+  ): Promise<HttpServiceResponse<T>>;
   post<T>(
     url: string,
     data?: any,
     config?: RequestConfig,
-  ): Promise<HttpClientResponse<T>>;
+  ): Promise<HttpServiceResponse<T>>;
   put<T>(
     url: string,
     data?: any,
     config?: RequestConfig,
-  ): Promise<HttpClientResponse<T>>;
+  ): Promise<HttpServiceResponse<T>>;
   patch<T>(
     url: string,
     data?: any,
     config?: RequestConfig,
-  ): Promise<HttpClientResponse<T>>;
+  ): Promise<HttpServiceResponse<T>>;
 }

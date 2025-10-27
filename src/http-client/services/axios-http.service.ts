@@ -1,17 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { HttpClient, RequestConfig } from '../interfaces/http-client.interface';
-import { HttpService } from '@nestjs/axios';
+import {
+  HttpService,
+  RequestConfig,
+} from '../interfaces/http-service.interface';
+import { HttpService as NestAxiosHttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
-import { HttpClientResponse } from '../interfaces/http-client-response.interface';
+import { HttpServiceResponse } from '../interfaces/http-service-response.interface';
 
 @Injectable()
-export class AxiosHttpClientService implements HttpClient {
-  constructor(private readonly httpService: HttpService) {}
+export class AxiosHttpService implements HttpService {
+  constructor(private readonly httpService: NestAxiosHttpService) {}
 
   async get<T>(
     url: string,
     config?: RequestConfig,
-  ): Promise<HttpClientResponse<T>> {
+  ): Promise<HttpServiceResponse<T>> {
     try {
       const observable = this.httpService.get<T>(url, config);
 
@@ -30,7 +33,7 @@ export class AxiosHttpClientService implements HttpClient {
     url: string,
     data?: any,
     config?: RequestConfig,
-  ): Promise<HttpClientResponse<T>> {
+  ): Promise<HttpServiceResponse<T>> {
     try {
       const observable = this.httpService.post<T>(url, data, config);
 
@@ -49,7 +52,7 @@ export class AxiosHttpClientService implements HttpClient {
     url: string,
     data?: any,
     config?: RequestConfig,
-  ): Promise<HttpClientResponse<T>> {
+  ): Promise<HttpServiceResponse<T>> {
     try {
       const observable = this.httpService.put<T>(url, data, config);
 
@@ -68,7 +71,7 @@ export class AxiosHttpClientService implements HttpClient {
     url: string,
     data?: any,
     config?: RequestConfig,
-  ): Promise<HttpClientResponse<T>> {
+  ): Promise<HttpServiceResponse<T>> {
     try {
       const observable = this.httpService.patch<T>(url, data, config);
 
@@ -86,7 +89,7 @@ export class AxiosHttpClientService implements HttpClient {
   async delete<T>(
     url: string,
     config?: RequestConfig,
-  ): Promise<HttpClientResponse<T>> {
+  ): Promise<HttpServiceResponse<T>> {
     try {
       const observable = this.httpService.delete<T>(url, config);
 
@@ -101,7 +104,7 @@ export class AxiosHttpClientService implements HttpClient {
     }
   }
 
-  private handleError<T>(error: unknown): HttpClientResponse<T> {
+  private handleError<T>(error: unknown): HttpServiceResponse<T> {
     if (error && typeof error === 'object' && 'response' in error) {
       const axiosError = error as any;
       const response = axiosError.response;

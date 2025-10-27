@@ -3,8 +3,8 @@ export { HttpClientModule } from './http-client/http-client.module';
 
 // HTTP Client Interfaces
 export * from './http-client/interfaces/http-client-config.interface';
-export * from './http-client/interfaces/http-client.interface';
-export * from './http-client/interfaces/http-client-response.interface';
+export * from './http-client/interfaces/http-service.interface';
+export * from './http-client/interfaces/http-service-response.interface';
 
 // HTTP Client Constants
 export * from './http-client/consts/http-client.constants';

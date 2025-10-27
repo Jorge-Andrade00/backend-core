@@ -1,14 +1,33 @@
-import { DynamicModule, Module } from '@nestjs/common';
+import { DynamicModule, Module, OnModuleInit } from '@nestjs/common';
 import {
   HttpClientConfig,
   HttpClientModuleAsyncOptions,
 } from './interfaces/http-client-config.interface';
-import { HttpModule } from '@nestjs/axios';
-import { AxiosHttpClientService } from './services/axios-http-client.service';
+import { HttpModule, HttpService as NestAxiosHttpService } from '@nestjs/axios';
+import { AxiosHttpService } from './services/axios-http.service';
 import { HTTP_CLIENT } from './consts/http-client.constants';
+import { InternalAxiosRequestConfig } from 'axios';
 
 @Module({})
-export class HttpClientModule {
+export class HttpClientModule implements OnModuleInit {
+  constructor(private readonly httpService: NestAxiosHttpService) {}
+
+  onModuleInit() {
+    this.httpService.axiosRef.interceptors.request.use(
+      (config: InternalAxiosRequestConfig) => {
+        // Get traceId from request context if available
+        const traceId = (config as any).traceId;
+
+        if (traceId) {
+          config.headers['x-request-id'] = traceId;
+          console.log('Request Interceptor - TraceId added:', config.headers);
+        }
+
+        return config;
+      },
+    );
+  }
+
   static forRoot(config: HttpClientConfig): DynamicModule {
     return {
       module: HttpClientModule,
@@ -19,10 +38,10 @@ export class HttpClientModule {
         }),
       ],
       providers: [
-        AxiosHttpClientService,
+        AxiosHttpService,
         {
           provide: HTTP_CLIENT,
-          useExisting: AxiosHttpClientService,
+          useExisting: AxiosHttpService,
         },
       ],
       exports: [HTTP_CLIENT],
@@ -40,10 +59,10 @@ export class HttpClientModule {
         }),
       ],
       providers: [
-        AxiosHttpClientService,
+        AxiosHttpService,
         {
           provide: HTTP_CLIENT,
-          useExisting: AxiosHttpClientService,
+          useExisting: AxiosHttpService,
         },
       ],
       exports: [HTTP_CLIENT],

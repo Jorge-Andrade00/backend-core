@@ -1,4 +1,4 @@
-export interface HttpClientResponse<T> {
+export interface HttpServiceResponse<T> {
   success: boolean;
   data?: T;
   error?: {
