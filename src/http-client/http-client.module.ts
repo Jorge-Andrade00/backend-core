@@ -21,6 +21,8 @@ export class HttpClientModule implements OnModuleInit {
         if (traceId) {
           config.headers['x-request-id'] = traceId;
           console.log('Request Interceptor - TraceId added:', config.headers);
+        } else {
+          console.log('NO SE ECONTRO ....');
         }
 
         return config;
