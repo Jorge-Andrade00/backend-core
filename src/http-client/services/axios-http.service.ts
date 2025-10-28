@@ -10,7 +10,7 @@ import { AxiosRequestConfig } from 'axios';
 export class AxiosHttpService implements HttpService {
   constructor(
     private readonly httpService: NestAxiosHttpService,
-    @Inject(REQUEST) private readonly request: any,
+    // @Inject(REQUEST) private readonly request: any,
   ) {}
 
   async get<T>(
@@ -18,9 +18,9 @@ export class AxiosHttpService implements HttpService {
     config?: AxiosRequestConfig,
   ): Promise<HttpServiceResponse<T>> {
     try {
-      const configWithTrace = this.addTraceId(config);
+      // const configWithTrace = this.addTraceId(config);
 
-      const observable = this.httpService.get<T>(url, configWithTrace);
+      const observable = this.httpService.get<T>(url, config);
 
       const response = await firstValueFrom(observable);
 
@@ -39,9 +39,9 @@ export class AxiosHttpService implements HttpService {
     config?: AxiosRequestConfig,
   ): Promise<HttpServiceResponse<T>> {
     try {
-      const configWithTrace = this.addTraceId(config);
+      // const configWithTrace = this.addTraceId(config);
 
-      const observable = this.httpService.post<T>(url, data, configWithTrace);
+      const observable = this.httpService.post<T>(url, data, config);
 
       const response = await firstValueFrom(observable);
 
@@ -60,9 +60,9 @@ export class AxiosHttpService implements HttpService {
     config?: AxiosRequestConfig,
   ): Promise<HttpServiceResponse<T>> {
     try {
-      const configWithTrace = this.addTraceId(config);
+      // const configWithTrace = this.addTraceId(config);
 
-      const observable = this.httpService.put<T>(url, data, configWithTrace);
+      const observable = this.httpService.put<T>(url, data, config);
 
       const response = await firstValueFrom(observable);
 
@@ -81,9 +81,9 @@ export class AxiosHttpService implements HttpService {
     config?: AxiosRequestConfig,
   ): Promise<HttpServiceResponse<T>> {
     try {
-      const configWithTrace = this.addTraceId(config);
+      // const configWithTrace = this.addTraceId(config);
 
-      const observable = this.httpService.patch<T>(url, data, configWithTrace);
+      const observable = this.httpService.patch<T>(url, data, config);
 
       const response = await firstValueFrom(observable);
 
@@ -101,9 +101,9 @@ export class AxiosHttpService implements HttpService {
     config?: AxiosRequestConfig,
   ): Promise<HttpServiceResponse<T>> {
     try {
-      const configWithTrace = this.addTraceId(config);
+      // const configWithTrace = this.addTraceId(config);
 
-      const observable = this.httpService.delete<T>(url, configWithTrace);
+      const observable = this.httpService.delete<T>(url, config);
 
       const response = await firstValueFrom(observable);
 
@@ -142,23 +142,23 @@ export class AxiosHttpService implements HttpService {
     };
   }
 
-  private addTraceId(config?: AxiosRequestConfig): AxiosRequestConfig {
-    const traceId = this.request['traceId'];
-    const headers: Record<string, string> = {};
+  // private addTraceId(config?: AxiosRequestConfig): AxiosRequestConfig {
+  //   const traceId = this.request['traceId'];
+  //   const headers: Record<string, string> = {};
 
-    if (config?.headers) {
-      Object.entries(config.headers).forEach(([key, value]) => {
-        if (value !== undefined && value !== null) {
-          headers[key] = String(value);
-        }
-      });
-    }
+  //   if (config?.headers) {
+  //     Object.entries(config.headers).forEach(([key, value]) => {
+  //       if (value !== undefined && value !== null) {
+  //         headers[key] = String(value);
+  //       }
+  //     });
+  //   }
 
-    headers['x-request-id'] = traceId;
+  //   headers['x-request-id'] = traceId;
 
-    return {
-      ...config,
-      headers,
-    };
-  }
+  //   return {
+  //     ...config,
+  //     headers,
+  //   };
+  // }
 }
