@@ -10,7 +10,7 @@ import { AxiosRequestConfig } from 'axios';
 export class AxiosHttpService implements HttpService {
   constructor(
     private readonly httpService: NestAxiosHttpService,
-    // @Inject(REQUEST) private readonly request: any,
+    @Inject(REQUEST) private readonly request: any,
   ) {}
 
   async get<T>(
